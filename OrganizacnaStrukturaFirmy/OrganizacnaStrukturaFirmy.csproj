@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Filters\" />
-    <Folder Include="Models\Validations\" />
   </ItemGroup>
 
 </Project>

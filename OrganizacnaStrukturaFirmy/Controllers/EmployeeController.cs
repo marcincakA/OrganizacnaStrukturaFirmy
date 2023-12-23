@@ -24,7 +24,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(await _context.Employees.ToListAsync());
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> getEmployeeById(int id)
         {
             //ToDO validacia vo filtry
@@ -44,7 +44,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(heroes);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Employee>> deleteEmployee(int id)
         {
             //Todo validacia id filter
@@ -56,7 +56,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             }
 
             _context.Employees.Remove(Employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(Employee);
         }
@@ -76,7 +76,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             Found_Employee.Lastname = employee.Lastname;
             Found_Employee.Title = employee.Title;
             Found_Employee.Id_workplace = employee.Id_workplace;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok(Found_Employee);
         }
     }

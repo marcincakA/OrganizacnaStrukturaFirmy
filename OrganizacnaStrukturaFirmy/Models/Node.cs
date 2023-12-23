@@ -11,10 +11,10 @@ namespace OrganizacnaStrukturaFirmy.Models
         
         [Required]
         public string NodeCode { get; set; }
-        
-        [Required] 
+
+
         public int? Id_parentNode { get; set; }
 
-        public int Id_headEmployee { get; set; } = 0;
+        public int? Id_headEmployee { get; set; }
     }
 }
