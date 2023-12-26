@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using OrganizacnaStrukturaFirmy.Controllers.Filters;
+using OrganizacnaStrukturaFirmy.Controllers.Filters.ActionFilters;
+using OrganizacnaStrukturaFirmy.Controllers.Filters.ExceptionFilters;
 using OrganizacnaStrukturaFirmy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<Employee_ValidateEmployeeIdAttribute>();
-
+builder.Services.AddScoped<Node_ValidateNodeIdAttribute>();
+builder.Services.AddScoped<Node_HandleUpdateExceptionsFilterAttribute>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

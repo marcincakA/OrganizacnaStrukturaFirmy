@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using OrganizacnaStrukturaFirmy.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace OrganizacnaStrukturaFirmy.Controllers.Filters
+namespace OrganizacnaStrukturaFirmy.Controllers.Filters.ActionFilters
 {
     public class Employee_ValidateEmployeeIdAttribute : ActionFilterAttribute
     {

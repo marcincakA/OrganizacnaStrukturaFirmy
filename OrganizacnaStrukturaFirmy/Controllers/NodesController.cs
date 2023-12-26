@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OrganizacnaStrukturaFirmy.Controllers.Filters;
+using OrganizacnaStrukturaFirmy.Controllers.Filters.ActionFilters;
+using OrganizacnaStrukturaFirmy.Controllers.Filters.ExceptionFilters;
 using OrganizacnaStrukturaFirmy.Data;
 using OrganizacnaStrukturaFirmy.Models;
 
@@ -33,9 +36,9 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
         public async Task<ActionResult<Node>> getNodeById(int id)
         {
-            //Todo filter id 
             var FoundNode = await _context.Nodes.FindAsync(id);
 
             if (FoundNode is null)
@@ -55,9 +58,10 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpDelete( "{id}")]
+        [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
+
         public async Task<ActionResult<Node>> deleteNode(int id)
         {
-            //todo filter
             var FoundNode = await _context.Nodes.FindAsync(id);
 
             if (FoundNode is null)
@@ -70,11 +74,12 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(FoundNode);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Node>> editNode(Node node)
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
+        [Node_ValidateUpdateNodeFilter]
+        [ServiceFilter(typeof(Node_HandleUpdateExceptionsFilterAttribute))]
+        public async Task<ActionResult<Node>> editNode(int id, Node node)
         {
-            //todo filter
-            //todo exception handling
             var FoundNode = await _context.Nodes.FindAsync(node.Id);
             if (FoundNode is null)
             {
@@ -86,7 +91,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             FoundNode.Id_headEmployee = node.Id_headEmployee;
             FoundNode.Level = node.Level;
             await _context.SaveChangesAsync();
-            return Ok(FoundNode);
+            return  NoContent();
         }
     }
 }

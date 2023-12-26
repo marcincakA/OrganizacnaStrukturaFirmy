@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OrganizacnaStrukturaFirmy.Controllers.Filters;
+using OrganizacnaStrukturaFirmy.Controllers.Filters.ActionFilters;
 using OrganizacnaStrukturaFirmy.Data;
 using OrganizacnaStrukturaFirmy.Models;
 
