@@ -17,5 +17,7 @@ namespace OrganizacnaStrukturaFirmy.Models
         public int? Id_parentNode { get; set; }
 
         public int? Id_headEmployee { get; set; }
+
+        public int Level { get; set; }
     }
 }

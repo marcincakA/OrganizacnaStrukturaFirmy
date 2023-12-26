@@ -19,9 +19,9 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
                 //Look for node based on parentNode id
                 //Repeat untill parentNode id is null or equal to Node id
                 //count number of recursions if the number is bigger than 3 return  new validationResult
-                if ((RecursiveCheck(context, Node, 4)) is false)
+                if ((RecursiveCheck(context, Node, Node.Level)) is false)
                 {
-                    return new ValidationResult("Max 4 levels");
+                    return new ValidationResult($"Max {Node.Level} levels for given node");
                 }
             }
             return ValidationResult.Success;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using OrganizacnaStrukturaFirmy.Models.Validations;
 
 namespace OrganizacnaStrukturaFirmy.Models
 {
@@ -11,6 +12,16 @@ namespace OrganizacnaStrukturaFirmy.Models
         public string Lastname { get; set; }
         [Required]
         public string? Title { get; set; }
-        public int? Id_workplace { get; set; } = 0;
+        public int? Id_workplace { get; set; }
+
+        [Required]
+        [Phone]
+        [Employee_UniquePhone]
+        public string Phone { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Employee_UniqueEmail]
+        public string Email { get; set; }
     }
 }

@@ -76,6 +76,8 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             Found_Employee.Lastname = employee.Lastname;
             Found_Employee.Title = employee.Title;
             Found_Employee.Id_workplace = employee.Id_workplace;
+            Found_Employee.Email = employee.Email;
+            Found_Employee.Phone = employee.Phone;
             await _context.SaveChangesAsync();
             return Ok(Found_Employee);
         }
