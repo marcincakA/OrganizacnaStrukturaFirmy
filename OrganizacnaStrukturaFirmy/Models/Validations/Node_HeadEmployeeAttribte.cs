@@ -5,15 +5,14 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
 {
     public class Node_HeadEmployeeAttribte : ValidationAttribute
     {
-        private readonly DataContext _dbContext;
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            //var context = (DataContext)validationContext.GetService(typeof(DataContext));
+            var context = (DataContext)validationContext.GetService(typeof(DataContext));
             var node = validationContext.ObjectInstance as Node;
 
             if (node != null)
             {
-                var foundEmployee = _dbContext.Employees.Find(node.Id_headEmployee);
+                var foundEmployee = context.Employees.Find(node.Id_headEmployee);
 
                 if (foundEmployee != null)
                 {
