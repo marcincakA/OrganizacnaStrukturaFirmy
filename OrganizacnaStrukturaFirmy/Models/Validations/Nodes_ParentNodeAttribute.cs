@@ -8,9 +8,10 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
 {
     public class Nodes_ParentNodeAttribute : ValidationAttribute
     {
+        private readonly DataContext _dbContext;
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var context = (DataContext)validationContext.GetService(typeof(DataContext)); 
+            //var context = (DataContext)validationContext.GetService(typeof(DataContext)); 
             var Node = validationContext.ObjectInstance as Node;
 
             if (Node != null && !(Node.Id_parentNode is null))
@@ -18,8 +19,8 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
                 
                 //Look for node based on parentNode id
                 //Repeat untill parentNode id is null or equal to Node id
-                //count number of recursions if the number is bigger than 3 return  new validationResult
-                if ((RecursiveCheck(context, Node, Node.Level)) is false)
+                //count number of recursions if the number is bigger than 4 return  new validationResult
+                if ((RecursiveCheck(_dbContext, Node, Node.Level)) is false)
                 {
                     return new ValidationResult($"Max {Node.Level} levels for given node");
                 }

@@ -25,6 +25,13 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(nodes);
         }
 
+        [HttpGet("/level")]
+        public async Task<ActionResult<List<Node>>> getAllNodesWithLevel(int level)
+        {
+            var nodex = await _context.Nodes.Where(node => node.Level == level).ToListAsync();
+            return Ok(nodex);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Node>> getNodeById(int id)
         {
@@ -77,6 +84,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             FoundNode.NodeCode = node.NodeCode;
             FoundNode.Id_parentNode = node.Id_parentNode;
             FoundNode.Id_headEmployee = node.Id_headEmployee;
+            FoundNode.Level = node.Level;
             await _context.SaveChangesAsync();
             return Ok(FoundNode);
         }

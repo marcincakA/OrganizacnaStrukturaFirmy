@@ -16,8 +16,10 @@ namespace OrganizacnaStrukturaFirmy.Models
         [Nodes_ParentNode]
         public int? Id_parentNode { get; set; }
 
+        [Node_HeadEmployeeAttribte]
         public int? Id_headEmployee { get; set; }
 
+        [Required]
         public int Level { get; set; }
     }
 }

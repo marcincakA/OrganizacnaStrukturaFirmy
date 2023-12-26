@@ -55,7 +55,7 @@ namespace OrganizacnaStrukturaFirmy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("OrganizacnaStrukturaFirmy.Models.Node", b =>
@@ -85,7 +85,7 @@ namespace OrganizacnaStrukturaFirmy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nodes");
+                    b.ToTable("Nodes", (string)null);
                 });
 #pragma warning restore 612, 618
         }
