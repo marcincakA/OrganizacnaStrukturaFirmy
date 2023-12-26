@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OrganizacnaStrukturaFirmy.Controllers.Filters;
 using OrganizacnaStrukturaFirmy.Data;
 using OrganizacnaStrukturaFirmy.Models;
 
@@ -25,9 +26,9 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
         public async Task<ActionResult<Employee>> getEmployeeById(int id)
         {
-            //ToDO validacia vo filtry
             var Employee = await _context.Employees.FindAsync(id);
 
             if (Employee is null)
@@ -45,9 +46,9 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
         public async Task<ActionResult<Employee>> deleteEmployee(int id)
         {
-            //Todo validacia id filter
             var Employee = await _context.Employees.FindAsync(id);
 
             if (Employee is null)
@@ -65,7 +66,6 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         public async Task<ActionResult<Employee>> editEmployee(Employee employee)
         {
-            //ToDo valiadacia ID filter
             //Todo exception co ked sa vymaze pocas editu?
             var Found_Employee = await _context.Employees.FindAsync(employee.Id);
             if (Found_Employee is null)

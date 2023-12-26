@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrganizacnaStrukturaFirmy.Controllers.Filters;
 using OrganizacnaStrukturaFirmy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<Employee_ValidateEmployeeIdAttribute>();
 
 var app = builder.Build();
 
