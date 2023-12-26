@@ -41,10 +41,6 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         {
             var FoundNode = await _context.Nodes.FindAsync(id);
 
-            if (FoundNode is null)
-            {
-                return NotFound("Node with given id not found");
-            }
             return Ok(FoundNode);
         }
 
@@ -54,7 +50,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             _context.Nodes.Add(node);
             await _context.SaveChangesAsync();
 
-            return Ok(node);
+            return CreatedAtAction(nameof(getNodeById), new {id = node.Id}, node);
         }
 
         [HttpDelete( "{id}")]
@@ -63,12 +59,6 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         public async Task<ActionResult<Node>> deleteNode(int id)
         {
             var FoundNode = await _context.Nodes.FindAsync(id);
-
-            if (FoundNode is null)
-            {
-                return NotFound("Node not found");
-            }
-
             _context.Nodes.Remove(FoundNode);
             await _context.SaveChangesAsync();
             return Ok(FoundNode);

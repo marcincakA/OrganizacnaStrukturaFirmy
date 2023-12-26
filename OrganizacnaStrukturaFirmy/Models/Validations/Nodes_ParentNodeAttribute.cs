@@ -21,7 +21,7 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
                 //count number of recursions if the number is bigger than 4 return  new validationResult
                 if ((RecursiveCheck(context, Node, Node.Level)) is false)
                 {
-                    return new ValidationResult($"Max {Node.Level} levels for given node");
+                    return new ValidationResult($"Wrong level for given node");
                 }
             }
             return ValidationResult.Success;

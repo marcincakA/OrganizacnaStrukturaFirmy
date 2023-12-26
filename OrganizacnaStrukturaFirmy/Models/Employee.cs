@@ -12,7 +12,8 @@ namespace OrganizacnaStrukturaFirmy.Models
         public string Lastname { get; set; }
         [Required]
         public string? Title { get; set; }
-        public int? Id_workplace { get; set; }
+
+        public int? Id_workplace { get; set; } = null;
 
         [Required]
         [Phone]

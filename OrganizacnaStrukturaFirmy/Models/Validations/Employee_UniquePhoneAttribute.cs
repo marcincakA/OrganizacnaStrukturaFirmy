@@ -12,7 +12,7 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
             var employee = validationContext.ObjectInstance as Employee;
             if (employee != null)
             {
-                var foundEmployee = context.Employees.FirstOrDefault(e => e.Phone == employee.Phone);
+                var foundEmployee = context.Employees.FirstOrDefault(e => e.Phone == employee.Phone && e.Id != employee.Id);
                 if (foundEmployee != null)
                 {
                     return new ValidationResult("Phone is not unique");

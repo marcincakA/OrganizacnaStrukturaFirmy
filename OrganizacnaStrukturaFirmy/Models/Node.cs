@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using OrganizacnaStrukturaFirmy.Models.Validations;
 
 namespace OrganizacnaStrukturaFirmy.Models
@@ -20,6 +21,7 @@ namespace OrganizacnaStrukturaFirmy.Models
         public int? Id_headEmployee { get; set; }
 
         [Required]
+        [Node_LevelAttribute]
         public int Level { get; set; }
     }
 }
