@@ -45,9 +45,10 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(Node_ValidateHeadEmployeeExistanceFilterAttribute))]
+        [ServiceFilter(typeof(Node_ValidateParentNodeExistanceFilterAttribute))]
         public async Task<ActionResult<Node>> createNode(Node node)
         {
-            //todo filter, existuje parent node?
             _context.Nodes.Add(node);
             await _context.SaveChangesAsync();
 
@@ -56,23 +57,27 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         [HttpDelete( "{id}")]
         [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
-
+        [ServiceFilter(typeof(Node_ValidateDeleteFilterAttribute))]
         public async Task<ActionResult<Node>> deleteNode(int id)
         {
-            //todo da sa odstranit, nema ziadnych potomkov?
             var FoundNode = await _context.Nodes.FindAsync(id);
             _context.Nodes.Remove(FoundNode);
             await _context.SaveChangesAsync();
             return Ok(FoundNode);
         }
 
+
+        //todo forceDelete
+        //vymaze vsetkych potomkov, setne employees workid na null
+
         [HttpPut("{id}")]
         [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
         [Node_ValidateUpdateNodeFilter]
         [ServiceFilter(typeof(Node_HandleUpdateExceptionsFilterAttribute))]
+        [ServiceFilter(typeof(Node_ValidateHeadEmployeeExistanceFilterAttribute))]
+        //[ServiceFilter(typeof(Node_ValidateParentNodeExistanceFilterAttribute))] kontrolovane v levelAttribute 
         public async Task<ActionResult<Node>> editNode(int id, Node node)
         {
-            //todo filter, existuje parent node?
             var FoundNode = await _context.Nodes.FindAsync(node.Id);
             if (FoundNode is null)
             {

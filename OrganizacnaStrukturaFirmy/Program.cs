@@ -23,6 +23,11 @@ builder.Services.AddScoped<Node_ValidateNodeIdAttribute>();
 builder.Services.AddScoped<Node_HandleUpdateExceptionsFilterAttribute>();
 builder.Services.AddScoped<Employee_HandleUpdateExceptionsFilterAttribute>();
 builder.Services.AddScoped<Node_LevelAttribute>();
+builder.Services.AddScoped<Employee_ValidateWorkplaceIdExistanceFilterAttribute>();
+builder.Services.AddScoped<Node_ValidateHeadEmployeeExistanceFilterAttribute>();
+builder.Services.AddScoped<Node_ValidateParentNodeExistanceFilterAttribute>();
+builder.Services.AddScoped<Node_ValidateDeleteFilterAttribute>();
+builder.Services.AddScoped<Employee_ValidateDeleteFilterAttribute>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

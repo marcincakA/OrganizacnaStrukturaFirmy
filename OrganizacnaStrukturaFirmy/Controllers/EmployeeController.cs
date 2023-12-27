@@ -19,9 +19,9 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(Employee_ValidateWorkplaceIdExistanceFilterAttribute))]
         public async Task<ActionResult<List<Employee>>> addEmployee(Employee employee)
         {
-            //todo filter existuje workplace?
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(getEmployeeById), new {id = employee.Id}, employee);
@@ -51,6 +51,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
+        [ServiceFilter(typeof(Employee_ValidateDeleteFilterAttribute))]
         public async Task<ActionResult<Employee>> deleteEmployee(int id)
         {
             //todo nie je uz hlava oddelenia?
@@ -64,9 +65,10 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
         [Employee_ValidateEmployeeFilter]
         [ServiceFilter(typeof(Employee_HandleUpdateExceptionsFilterAttribute))]
+        [ServiceFilter(typeof(Employee_ValidateWorkplaceIdExistanceFilterAttribute))]
+
         public async Task<ActionResult<Employee>> editEmployee(int id, Employee employee)
         {
-            //todo filter existuje workplace?
             var Found_Employee = await _context.Employees.FindAsync(employee.Id);
             Found_Employee.Name = employee.Name;
             Found_Employee.Lastname = employee.Lastname;

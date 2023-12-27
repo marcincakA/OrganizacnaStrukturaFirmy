@@ -14,18 +14,28 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
 
             if (node != null)
             {
-                if (node.Id_parentNode == 0 || node.Id_parentNode == null) //pravdepodobne tam nula nemoze byt kedze to je foreign key -_-
+                if (node.Id_parentNode == null) //pravdepodobne tam nula nemoze byt kedze to je foreign key -_-
                 {
-                    if (node.Level != 1)
+
+                        if (node.Level != 1)
                     {
                         return new ValidationResult("Company has to be level 1.");
                     }
                 }
 
-                if (node.Id_parentNode != null)
+                else if (node.Id_parentNode <= 0)
+                {
+                    return new ValidationResult("Incorrect parrent node id");
+                }
+
+                else if (node.Id_parentNode > 0)
                 {
                     var parentNode = context.Nodes.Find(node.Id_parentNode);
-                    if (node.Level != parentNode.Level + 1)
+                    if (parentNode == null)
+                    {
+                        return new ValidationResult("Parent node does not exist");
+                    }
+                    else if (node.Level != parentNode.Level + 1)
                     {
                         return new ValidationResult("Incorrect level for given node.");
                     }
