@@ -28,7 +28,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(nodes);
         }
 
-        [HttpGet("/level")]
+        [HttpGet("level")]
         public async Task<ActionResult<List<Node>>> getAllNodesWithLevel(int level)
         {
             var nodex = await _context.Nodes.Where(node => node.Level == level).ToListAsync();
@@ -69,6 +69,36 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         //todo forceDelete
         //vymaze vsetkych potomkov, setne employees workid na null
+        [HttpDelete("force/{id}")]
+        [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]
+        public async Task<ActionResult<List<Node>>> forceDeleteNode(int id)
+        {
+            List<Node> nodes = new List<Node>();
+            var FoundNode = await _context.Nodes.FindAsync(id);
+            await RecursiveDeleteAsync(FoundNode, nodes);
+            return Ok(nodes);
+        }
+
+        private async Task RecursiveDeleteAsync(Node node, List<Node> list)
+        {
+            var employees = await _context.Employees.Where(e => e.Id_workplace==node.Id).ToListAsync();//daj pracujucich v danom oddeleni
+            foreach (var employee in employees)
+            {
+                employee.Id_workplace = null;
+                //mozno treba dat sem save changes
+            }
+            await _context.SaveChangesAsync();
+            var hasChild = await _context.Nodes.AnyAsync(n => n.Id_parentNode == node.Id);
+            if (hasChild)
+            {
+                var child = await _context.Nodes.FirstAsync(n => n.Id_parentNode == node.Id);
+                await RecursiveDeleteAsync(child, list);
+            }
+
+            await deleteNode(node.Id);
+            list.Add(node);
+            await _context.SaveChangesAsync();
+        }
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(Node_ValidateNodeIdAttribute))]

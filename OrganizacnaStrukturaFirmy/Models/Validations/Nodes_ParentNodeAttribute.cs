@@ -40,8 +40,12 @@ namespace OrganizacnaStrukturaFirmy.Models.Validations
             }
 
             var parentNode = context.Nodes.Find(node.Id_parentNode);
+            if (parentNode != null)
+            {
+                return RecursiveCheck(context, parentNode, maxRecursionLevels - 1);
+            }
 
-            return RecursiveCheck(context, parentNode, maxRecursionLevels - 1);
+            return false;
         }
     }
 

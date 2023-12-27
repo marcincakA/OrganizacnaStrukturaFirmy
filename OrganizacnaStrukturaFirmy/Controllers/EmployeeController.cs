@@ -54,11 +54,28 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [ServiceFilter(typeof(Employee_ValidateDeleteFilterAttribute))]
         public async Task<ActionResult<Employee>> deleteEmployee(int id)
         {
-            //todo nie je uz hlava oddelenia?
             var Employee = await _context.Employees.FindAsync(id);
             _context.Employees.Remove(Employee);
             await _context.SaveChangesAsync();
             return Ok(Employee);
+        }
+
+        //if head of node, set node.headId to null and delete employee
+        [HttpDelete("force/{id}")]
+        [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
+        public async Task<ActionResult<Employee>> forceDeleteEmployee(int id)
+        {
+            var node = await _context.Nodes.FirstOrDefaultAsync(n => n.Id_headEmployee == id);
+            var employee = await _context.Employees.FindAsync(id);
+            if (node == null)
+            {
+                await deleteEmployee(id);
+                return Ok(employee);
+            }
+            node.Id_headEmployee = null;
+            await _context.SaveChangesAsync();
+            await deleteEmployee(id);
+            return Ok(employee);
         }
 
         [HttpPut("{id}")]
@@ -79,5 +96,9 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        [HttpGet("getHeadEmployees/{level}")]
+        //filter pozri ci je level 1-4
+
     }
 }
