@@ -28,6 +28,7 @@ builder.Services.AddScoped<Node_ValidateHeadEmployeeExistanceFilterAttribute>();
 builder.Services.AddScoped<Node_ValidateParentNodeExistanceFilterAttribute>();
 builder.Services.AddScoped<Node_ValidateDeleteFilterAttribute>();
 builder.Services.AddScoped<Employee_ValidateDeleteFilterAttribute>();
+builder.Services.AddScoped<Employee_ValidateId_WorkplaceFilterAttribute>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

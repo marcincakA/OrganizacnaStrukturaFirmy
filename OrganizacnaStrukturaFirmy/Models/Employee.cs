@@ -17,7 +17,7 @@ namespace OrganizacnaStrukturaFirmy.Models
 
         [Required]
         [Phone]
-        [Employee_UniquePhone]
+        [Employee_UniquePhone] // ci to bol dobry napad kontrolovat tu a nie v controlleri, neviem asi skor nie ako hej
         public string Phone { get; set; }
 
         [Required]

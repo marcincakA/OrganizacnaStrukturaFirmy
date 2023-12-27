@@ -21,7 +21,7 @@ namespace OrganizacnaStrukturaFirmy.Models
         public int? Id_headEmployee { get; set; }
 
         [Required]
-        [Node_LevelAttribute]
+        [Node_Level]
         public int Level { get; set; }
     }
 }

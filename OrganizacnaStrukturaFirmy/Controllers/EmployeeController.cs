@@ -43,6 +43,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         }
 
         [HttpGet("workplace/{Id_workplace}")]
+        [ServiceFilter(typeof(Employee_ValidateId_WorkplaceFilterAttribute))]
         public async Task<ActionResult<List<Employee>>> getEmployeesWorkingAt(int Id_workplace)
         {
             var Employee = await _context.Employees.Where(employee => employee.Id_workplace == Id_workplace).ToListAsync();
@@ -99,6 +100,22 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         [HttpGet("getHeadEmployees/{level}")]
         //filter pozri ci je level 1-4
+        [Employee_ValidateLevelFilter]
+        public async Task<ActionResult<List<Employee>>> getHeadEmployees(int level)
+        {
+            List<Employee> employees = new List<Employee>();
+            var nodes = await _context.Nodes.Where(n => n.Level==level).ToListAsync();
+            foreach (var node in nodes)
+            {
+                var employee = await _context.Employees.FindAsync(node.Id_headEmployee);
+                if (employee != null)
+                {
+                    employees.Add(employee);
+                }
 
+            }
+
+            return Ok(employees);
+        }
     }
 }
