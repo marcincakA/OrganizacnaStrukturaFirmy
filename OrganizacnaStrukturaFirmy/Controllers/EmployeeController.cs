@@ -21,6 +21,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Employee>>> addEmployee(Employee employee)
         {
+            //todo filter existuje workplace?
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(getEmployeeById), new {id = employee.Id}, employee);
@@ -41,7 +42,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
             return Ok(heroes);
         }
 
-        [HttpGet("workplace/{id}")]
+        [HttpGet("workplace/{Id_workplace}")]
         public async Task<ActionResult<List<Employee>>> getEmployeesWorkingAt(int Id_workplace)
         {
             var Employee = await _context.Employees.Where(employee => employee.Id_workplace == Id_workplace).ToListAsync();
@@ -52,6 +53,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [ServiceFilter(typeof(Employee_ValidateEmployeeIdAttribute))]
         public async Task<ActionResult<Employee>> deleteEmployee(int id)
         {
+            //todo nie je uz hlava oddelenia?
             var Employee = await _context.Employees.FindAsync(id);
             _context.Employees.Remove(Employee);
             await _context.SaveChangesAsync();
@@ -64,6 +66,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [ServiceFilter(typeof(Employee_HandleUpdateExceptionsFilterAttribute))]
         public async Task<ActionResult<Employee>> editEmployee(int id, Employee employee)
         {
+            //todo filter existuje workplace?
             var Found_Employee = await _context.Employees.FindAsync(employee.Id);
             Found_Employee.Name = employee.Name;
             Found_Employee.Lastname = employee.Lastname;

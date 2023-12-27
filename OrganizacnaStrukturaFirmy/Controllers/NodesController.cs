@@ -47,6 +47,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [HttpPost]
         public async Task<ActionResult<Node>> createNode(Node node)
         {
+            //todo filter, existuje parent node?
             _context.Nodes.Add(node);
             await _context.SaveChangesAsync();
 
@@ -58,6 +59,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
 
         public async Task<ActionResult<Node>> deleteNode(int id)
         {
+            //todo da sa odstranit, nema ziadnych potomkov?
             var FoundNode = await _context.Nodes.FindAsync(id);
             _context.Nodes.Remove(FoundNode);
             await _context.SaveChangesAsync();
@@ -70,6 +72,7 @@ namespace OrganizacnaStrukturaFirmy.Controllers
         [ServiceFilter(typeof(Node_HandleUpdateExceptionsFilterAttribute))]
         public async Task<ActionResult<Node>> editNode(int id, Node node)
         {
+            //todo filter, existuje parent node?
             var FoundNode = await _context.Nodes.FindAsync(node.Id);
             if (FoundNode is null)
             {
